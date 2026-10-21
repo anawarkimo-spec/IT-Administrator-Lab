@@ -25,13 +25,13 @@ Active Directory administration tasks completed in my VirtualBox home lab. Each 
 
 **Problem found:** The script could not add one Sales user to `Sales-Staff`. The group's `SamAccountName` was `Sale-Staff` (a typo from when it was first created), while its display name was `Sales-Staff`. Fixed with `Set-ADGroup -Identity "Sale-Staff" -SamAccountName "Sales-Staff"`, then added the user.
 
-![Bulk user creation script pasted into PowerShell on DC01](images/01-script-pasted.png)
+![Bulk user creation script pasted into PowerShell on DC01](01-script-pasted.png)
 
-![Script error adding a user to Sales-Staff, Finance users created](images/02-sales-group-error.png)
+![Script error adding a user to Sales-Staff, Finance users created](02-sales-group-error.png)
 
-![Group display name Sales-Staff versus SamAccountName Sale-Staff](images/03-group-samaccountname-typo.png)
+![Group display name Sales-Staff versus SamAccountName Sale-Staff](03-group-samaccountname-typo.png)
 
-![Group renamed, Sales-Staff members listed, all 6 users in their departments](images/04-users-created-verified.png)
+![Group renamed, Sales-Staff members listed, all 6 users in their departments](04-users-created-verified.png)
 
 ---
 
@@ -47,7 +47,7 @@ Active Directory administration tasks completed in my VirtualBox home lab. Each 
 
 **Result:** `PasswordExpired` showed `True`, meaning the user must set a new password at her next sign-in. The same reset can also be done in ADUC (right-click the user, Reset Password).
 
-![Password reset commands and verification showing PasswordExpired True](images/05-password-reset.png)
+![Password reset commands and verification showing PasswordExpired True](05-password-reset.png)
 
 ---
 
@@ -64,7 +64,7 @@ Active Directory administration tasks completed in my VirtualBox home lab. Each 
 
 **Result:** `LockedOut` returned to `False` and the user could sign in again.
 
-![Unlock-ADAccount run and LockedOut showing False for James Chen (top of output)](images/06-unlock-and-offboard.png)
+![Unlock-ADAccount run and LockedOut showing False for James Chen (top of output)](06-unlock-and-offboard.png)
 
 ---
 
@@ -84,7 +84,7 @@ Active Directory administration tasks completed in my VirtualBox home lab. Each 
 
 **Result:** `Enabled` is `False`, `MemberOf` is empty, the description shows the offboarding note, and the account sits in `OU=Disabled Users`. The account is kept in AD for records.
 
-![Offboarding commands and final verification: disabled, empty MemberOf, Disabled Users OU](images/06-unlock-and-offboard.png)
+![Offboarding commands and final verification: disabled, empty MemberOf, Disabled Users OU](06-unlock-and-offboard.png)
 
 ---
 
@@ -106,19 +106,19 @@ Active Directory administration tasks completed in my VirtualBox home lab. Each 
 
 **Problem found:** My first `icacls` grant failed because two commands ran together on one line, leaving the folder with no permissions after inheritance was removed. Reran the grant on its own and confirmed with `icacls`.
 
-![FinanceData share created and first icacls attempt failing](images/07-share-created-permissions-error.png)
+![FinanceData share created and first icacls attempt failing](07-share-created-permissions-error.png)
 
-![Folder permissions fixed: Finance-Staff Modify, Administrators and SYSTEM Full Control](images/08-permissions-fixed.png)
+![Folder permissions fixed: Finance-Staff Modify, Administrators and SYSTEM Full Control](08-permissions-fixed.png)
 
-![Map Finance Drive GPO linked to the Finance OU](images/09-gpo-scope.png)
+![Map Finance Drive GPO linked to the Finance OU](09-gpo-scope.png)
 
-![Finance (F:) mapped on PC1 for a Finance user](images/10-finance-drive-mapped.png)
+![Finance (F:) mapped on PC1 for a Finance user](10-finance-drive-mapped.png)
 
-![Test file saved to Finance (F:)](images/11-finance-test-file.png)
+![Test file saved to Finance (F:)](11-finance-test-file.png)
 
-![IT user on PC1 with no F: drive](images/12-it-user-no-drive.png)
+![IT user on PC1 with no F: drive](12-it-user-no-drive.png)
 
-![IT user denied access to \\DC01\FinanceData](images/13-access-denied.png)
+![IT user denied access to \\DC01\FinanceData](13-access-denied.png)
 
 ---
 
@@ -139,18 +139,18 @@ Active Directory administration tasks completed in my VirtualBox home lab. Each 
 
 **Takeaway:** "Domain isn't available" is usually a network or DNS problem, not an account problem. Check the IP address, DHCP status, and DNS server before touching the account.
 
-![Domain isn't available sign-in error on PC1](images/14-domain-unavailable-error.png)
+![Domain isn't available sign-in error on PC1](14-domain-unavailable-error.png)
 
-![Broken ipconfig /all: DHCP disabled, static 192.168.50.10](images/15-static-ip-dhcp-off.png)
+![Broken ipconfig /all: DHCP disabled, static 192.168.50.10](15-static-ip-dhcp-off.png)
 
-![Ping to DC01 works but nslookup fails](images/16-ping-ok-dns-fail.png)
+![Ping to DC01 works but nslookup fails](16-ping-ok-dns-fail.png)
 
-![DC01 ipconfig /all showing the mistyped DNS server](images/17-dc01-dns-typo.png)
+![DC01 ipconfig /all showing the mistyped DNS server](17-dc01-dns-typo.png)
 
-![DHCP scope option 006 DNS Servers set to 192.168.10.10](images/18-dhcp-scope-dns-option.png)
+![DHCP scope option 006 DNS Servers set to 192.168.10.10](18-dhcp-scope-dns-option.png)
 
-![DHCP server authorized under the old address 10.0.2.15](images/19-dhcp-authorization-stale.png)
+![DHCP server authorized under the old address 10.0.2.15](19-dhcp-authorization-stale.png)
 
-![DHCP authorization after removing the stale entry](images/20-dhcp-authorization-fixed.png)
+![DHCP authorization after removing the stale entry](20-dhcp-authorization-fixed.png)
 
-![Fixed ipconfig /all on PC1: DHCP enabled, 192.168.10.100, DNS 192.168.10.10](images/21-pc1-fixed-ipconfig.png)
+![Fixed ipconfig /all on PC1: DHCP enabled, 192.168.10.100, DNS 192.168.10.10](21-pc1-fixed-ipconfig.png)
